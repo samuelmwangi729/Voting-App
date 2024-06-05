@@ -4,7 +4,9 @@ const initialState = {
     user: {
         loggedIn: false,
         access_token: null,
-        refresh_token:null
+        refresh_token:null,
+        username:null,
+        role:null,
 
     }
 }
@@ -18,7 +20,8 @@ export const authUsersSlice = createSlice({
             state.user.loggedIn = true;
             state.user.access_token = action.payload.tokens.access_token;
             state.user.refresh_token = action.payload.tokens.refresh_token;
-            console.log(state.user)
+            state.user.username = action.payload.username;
+            state.user.role = action.payload.role
         },
         logout: (state) => {
             //reset the initial state

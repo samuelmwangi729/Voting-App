@@ -46,13 +46,15 @@ const Login = ({ navigation }) => {
                     setLoading(false)
                     setLoginError("")
                     setLoginSuccess("Login successful")
-                    console.log(login_response)
                     //dispatch the login action with the tokens 
                     dispatch(login(login_response))
                     setUsername('')
                     setLoginSuccess("")
                     setPassword('')
-                    navigation.navigate("dashboard")
+                    navigation.navigate("dashboard",{
+                        userName:login_response.username,
+                        userRole:login_response.role
+                    })
                 }
             } catch (error) {
                 console.log(error)

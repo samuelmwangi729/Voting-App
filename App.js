@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import LandingScreen from './Components/LandingScreen';
@@ -16,7 +15,7 @@ const App = () => {
         <Screens.Navigator initialRouteName='landingScreen'>
           <Screens.Screen name="landingScreen" component={LandingScreen} options={{ headerShown: false }} />
           <Screens.Screen name="Login" component={Login} options={{ headerShown: false }} />
-          <Screens.Screen name="dashboard" component={Dashboard} options={{ headerShown: false }} />
+          <Screens.Screen name="dashboard" component={Dashboard} options={{headerShown:false}} />
         </Screens.Navigator>
       </Provider>
     </NavigationContainer>
