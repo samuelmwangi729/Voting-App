@@ -169,7 +169,7 @@ const Login = ({ navigation }) => {
                             </Pressable>
                         </View>
                         <View className="top-10">
-                            <Pressable>
+                            <Pressable onPress={()=>navigation.navigate("register")}>
                                 <Text className="text-center capitalize text-lg">Do not have an Account?
                                     <Text className="font-bold px-2 underline upper">
                                         Sign Up here
