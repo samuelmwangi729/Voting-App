@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import Dashboard from './Components/Dashboard';
 import Register from './Components/Register';
+import Reset from './Components/Reset';
+import ResetCode from './Components/ResetCode'
 
 
 const App = () => {
@@ -18,6 +20,8 @@ const App = () => {
           <Screens.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Screens.Screen name="dashboard" component={Dashboard} options={{headerShown:false}} />
           <Screens.Screen name="register" component={Register} options={{headerShown:false}} />
+          <Screens.Screen name="reset" component={Reset} options={{headerShown:false}} />
+          <Screens.Screen name="resetcode" component={ResetCode} options={{headerShown:false}} />
         </Screens.Navigator>
       </Provider>
     </NavigationContainer>

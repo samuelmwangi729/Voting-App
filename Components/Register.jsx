@@ -1,150 +1,182 @@
 import {
   View,
   Text,
-  SafeAreaView,
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
   Image,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-
-const Register = () => {
+import { SafeAreaView } from "react-native-safe-area-context";
+const Register = ({ navigation }) => {
   const [username, setUsername] = useState(null);
   const [fullnames, setFullName] = useState(null);
   const [password, setpassword] = useState(null);
   const [cpassword, setcpassword] = useState(null);
-  const [errors,setErrors] = useState("")
-  const handleChange = (field, value) => {
-    if(value.length===0){
-        const errorObject = {
-            [`${field}`]:`The ${field} field can not be blank`
-        }
-        setErrors(errorObject)
-        return;
-    }else{
-        const errorObject = {
-            [`${field}`]:''
-        }
-        setErrors(errorObject)
-    }
-    //check the user email field directly 
-    if(field==="email"){
-        setUsername(value)
-    }else if(field==='fullnames'){
-        setFullName(value)
-    }
-    else if(field==='password'){
-        setpassword(value)
-    }
-    else if(field==='confirmpassword'){
-        setcpassword(value)
-    }
-    else{
-        setErrors({'email':'Invalid data submitted'})
-    }
-  };
-  validateForm = () =>{
+  const [errors, setErrors] = useState("")
+  const [resp, setResp] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [respSuccess, setRespSuccess] = useState("")
+  validateForm = () => {
     //check the username if present 
-    if(username){
-        setErrors({'email':'The email is required'})
-        return;
-    }else if(!fullnames){
-        setErrors({'fullnames':'The full names are required'})
-        return
+    if (!username) {
+      setErrors({ 'email': 'The email is required' })
+      return;
+    } else if (!fullnames) {
+      setErrors({ 'fullnames': 'The full names are required' })
+      return
     }
-    
-    else if(!password){
-        setErrors({'password':'Password is required'})
-        return
+
+    else if (!password) {
+      setErrors({ 'password': 'Password is required' })
+      return
     }
-    else if(!cpassword){
-        setErrors({'confirmpassword':'The confirm field is required'})
-        return
+    else if (!cpassword) {
+      setErrors({ 'confirmpassword': 'The confirm field is required' })
+      return
     }
-    else if(password !== cpassword){
-        setErrors({'password':'The two password must match'})
-        return
+    else if (password !== cpassword) {
+      setErrors({ 'password': 'The two password must match' })
+      return
     }
-    else{
-        return true
+    else {
+      setErrors("")
+      return true
     }
   }
-  submitData= ()=>{
-    if(validateForm()){
-        alert('submit data')
+  const RegisterUser = async () => {
+    setResp("")
+    setLoading(true)
+    try {
+      const response = await fetch(`${process.env.API_URL}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          Names: fullnames,
+          email: username,
+          password: password,
+          repeatPassword: cpassword
+        })
+      })
+      const data = await response.json()
+      setLoading(false)
+      if (data.error) {
+        setResp(data.error.message)
+      } else {
+        setUsername("")
+        setFullName("")
+        setpassword("")
+        setcpassword("")
+        setRespSuccess(data.message)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+
+  }
+  submitData = () => {
+    setResp("")
+    if (validateForm()) {
+      //post the bata to the backend
+      RegisterUser()
     }
   }
   return (
     <SafeAreaView className="h-full">
-      <View className="flex justify-between items-center px-2 h-1/4 bg-[#ff6600]">
+      <View className="flex justify-between items-center px-2 h-1/4 bg-[#ff6600] rounded-b-3xl">
         <Text className="text-center top-1/2 text-white font-bold text-6xl">
           VOTAS
         </Text>
       </View>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView behaviour="padding" className="px-2 h-3/4">
         <View className="h-3/4 mt-5 w-full" style={{ elevation: 5 }}>
-          <View className="mt-4 p-5 flex gap-2">
+          <View className="mt-1 px-5 flex gap-2">
             <Text className="text-center font-bold text-2xl underline">
               Register An Account
             </Text>
             {/* create the form here  */}
-            <Text>Email Address</Text>
             {
-                errors.email?(<Text className="text-left font-bold text-red-500">
-                    {errors.email}
-                </Text>):null
+              respSuccess ? (
+                <Text className="text-center text-green-600">
+                  {respSuccess}
+                </Text>
+              ) : null
             }
+            {
+              resp ? (<Text className="text-center text-red-600">
+                {resp}
+              </Text>) : null
+            }
+            {
+              errors.email ? (<Text className="text-left font-bold text-red-500">
+                {errors.email}
+              </Text>) : null
+            }
+            <Text>Email Address</Text>
             <TextInput
-              className={`px-2 h-10 ${errors.email?" border border-red-500":"border"}`}
+              className={`px-2 h-10 ${errors.email ? " border border-red-500" : "border"}`}
               placeholder="Enter your User Email"
               defaultValue={username}
               onChangeText={(newUsername) =>
-                handleChange("email", newUsername)
+                setUsername(newUsername)
               }
               keyboardType="email-address"
             />
             <Text>Full Name</Text>
             {
-                errors.fullnames?(<Text className="text-left font-bold text-red-500">
-                    {errors.fullnames}
-                </Text>):null
+              errors.fullnames ? (<Text className="text-left font-bold text-red-500">
+                {errors.fullnames}
+              </Text>) : null
             }
             <TextInput
-              className={`px-2 h-10 ${errors.fullnames?" border border-red-500":"border"}`}
+              className={`px-2 h-10 ${errors.fullnames ? " border border-red-500" : "border"}`}
               placeholder="Enter Full Names Here"
               defaultValue={fullnames}
-              onChangeText={(fullnames) => handleChange("fullnames", fullnames)}
+              onChangeText={(fullnames) => setFullName(fullnames)}
             />
             <Text>Password</Text>
             {
-                errors.password?(<Text className="text-left font-bold text-red-500">
-                    {errors.password}
-                </Text>):null
+              errors.password ? (<Text className="text-left font-bold text-red-500">
+                {errors.password}
+              </Text>) : null
             }
             <TextInput
               secureTextEntry={true}
-              className={`px-2 h-10 ${errors.password?" border border-red-500":"border"}`}
+              className={`px-2 h-10 ${errors.password ? " border border-red-500" : "border"}`}
               placeholder="Enter your Password Here"
               defaultValue={password}
-              onChangeText={(password) => handleChange("password", password)}
+              onChangeText={(password) => setpassword(password)}
             />
             <Text>Confirm Password</Text>
             {
-                errors.confirmpassword?(<Text className="text-left font-bold text-red-500">
-                    {errors.confirmpassword}
-                </Text>):null
+              errors.confirmpassword ? (<Text className="text-left font-bold text-red-500">
+                {errors.confirmpassword}
+              </Text>) : null
             }
             <TextInput
               secureTextEntry={true}
-              className={`px-2 h-10 ${errors.confirmpassword?" border border-red-500":"border"}`}
+              className={`px-2 h-10 ${errors.confirmpassword ? " border border-red-500" : "border"}`}
               placeholder="Confirm Your Password"
               defaultValue={cpassword}
-              onChangeText={(cpassword) => handleChange("confirmpassword", cpassword)}
+              onChangeText={(cpassword) => setcpassword(cpassword)}
             />
             <TouchableOpacity className="bg-[#ff6600] h-10 flex justify-center" onPress={submitData}>
-              <Text className="text-center text-white text-xl">Register</Text>
+              {
+                loading ? (
+                  <View className="flex flex-row justify-center items-center">
+                    <ActivityIndicator size={'large'} color={"white"} />
+                    <Text className="text-white px-5 text-xl font-bold">
+                      Please Wait ...
+                    </Text>
+                  </View>
+                ) : (
+                  <Text className="text-center text-white text-xl">
+                    Register
+                  </Text>
+                )
+              }
             </TouchableOpacity>
             <Text className="text-2xl font-bold text-center">Or</Text>
             {/* use different register method  */}

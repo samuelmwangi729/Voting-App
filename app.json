@@ -3,6 +3,7 @@
     "name": "school",
     "slug": "school",
     "version": "1.0.0",
+    "scheme":"votas",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
