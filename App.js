@@ -8,6 +8,7 @@ import Dashboard from './Components/Dashboard';
 import Register from './Components/Register';
 import Reset from './Components/Reset';
 import ResetCode from './Components/ResetCode'
+import Institutions from './Components/Institutions';
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
           <Screens.Screen name="register" component={Register} options={{headerShown:false}} />
           <Screens.Screen name="reset" component={Reset} options={{headerShown:false}} />
           <Screens.Screen name="resetcode" component={ResetCode} options={{headerShown:false}} />
+          <Screens.Screen name="institutions" component={Institutions} options={{headerShown:true}} />
         </Screens.Navigator>
       </Provider>
     </NavigationContainer>

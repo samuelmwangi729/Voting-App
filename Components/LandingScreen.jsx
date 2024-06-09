@@ -2,8 +2,6 @@ import {
   View,
   Text,
   Image,
-  Pressable,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect } from "react";
@@ -38,7 +36,7 @@ const LandingScreen = ({ navigation }) => {
             </Text>
           </View>
           <View className="bg-[#FF6600] h-1/4 flex flex-col justify-evenly items-center">
-            <TouchableOpacity className="w-[90%] border border-white rounded-full text-center p-3">
+            <TouchableOpacity className="w-[90%] border border-white rounded-full text-center p-3"   onPress={() => navigation.navigate("institutions")}>
               <Text className="w-full text-center text-xl font-bold text-white">
                 Learn More
               </Text>

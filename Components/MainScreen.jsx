@@ -1,11 +1,11 @@
 
-import { View, Text, SafeAreaView, StatusBar, Image } from 'react-native'
+import { View, Text, SafeAreaView, StatusBar, Image ,TouchableOpacity} from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../redux/authReducer'
 import AppBar from './AppBar'
 import { InboxArrowDownIcon } from 'react-native-heroicons/outline';
-import { HomeIcon, UserCircleIcon, CogIcon, CurrencyDollarIcon, BellAlertIcon } from 'react-native-heroicons/outline';
+import { BuildingLibraryIcon, UserGroupIcon, CogIcon, CurrencyDollarIcon, BellAlertIcon } from 'react-native-heroicons/outline';
 import ImageBanner from '../assets/banner.png'
 
 const MainScreen = ({ route, navigation }) => {
@@ -19,8 +19,8 @@ const MainScreen = ({ route, navigation }) => {
         </Text>
       </View>
       <View className="flex flex-row justify-between items-center flex-wrap w-full p-2 gap-2">
-        <View className="w-[48%] bg-orange-300 flex flex-row p-2" style={{ elevation: 5 }}>
-          <UserCircleIcon style={{ color: '#ff6600' }} size={80} />
+        <TouchableOpacity className="w-[48%] bg-orange-300 flex flex-row p-2" style={{ elevation: 5 }} onPress={()=>navigation.navigate('users')}>
+          <UserGroupIcon style={{ color: 'white' }} size={80} />
           <View className="flex">
             <Text className="text-center p-2 text-3xl font-bold">
               Users
@@ -29,7 +29,7 @@ const MainScreen = ({ route, navigation }) => {
               100
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
         {/* second box  */}
         <View className="w-[47%] bg-orange-300 flex flex-row p-2" style={{ elevation: 5 }}>
           <InboxArrowDownIcon style={{ color: '#ff6600' }} size={80} />
@@ -43,18 +43,17 @@ const MainScreen = ({ route, navigation }) => {
           </View>
         </View>
         {/* third box  */}
-
-        <View className="w-[48%] bg-orange-300 flex flex-row p-2" style={{ elevation: 5 }}>
+        <TouchableOpacity className="w-[48%] bg-orange-300 flex flex-row p-2" style={{ elevation: 5 }} onPress={()=>navigation.navigate('settings')}>
           <CogIcon style={{ color: '#ff6600' }} size={80} />
           <View className="flex justify-start items-start">
             <Text className="text-left p-2 text-2xl font-bold">
               Setting
             </Text>
             <Text className="text-center p-2 text-2xl font-bold">
-              100
+              
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View className="w-[47%] bg-orange-300 flex flex-row p-2" style={{ elevation: 5 }}>
           <CurrencyDollarIcon style={{ color: '#ff6600' }} size={80} />
@@ -69,7 +68,7 @@ const MainScreen = ({ route, navigation }) => {
         </View>
         {/* fourth box  */}
         <View className="bg-orange-300 flex flex-row p-2 flex-2 w-[98%] justify-between items-center" style={{ elevation: 5 }}>
-          <InboxArrowDownIcon style={{ color: '#ff6600' }} size={80} />
+          <BuildingLibraryIcon style={{ color: '#ff6600' }} size={80} />
           <View className="flex justify-start items-start">
             <Text className="text-left p-2 text-2xl font-bold">
               Organizations

@@ -35,14 +35,14 @@ const Dashboard = ({ navigation }) => {
             ),
             tabBarBadge: 3,
           }} />
-          <Tab.Screen name="settings" component={Setting} options={{
+          <Tab.Screen name="settings" component={Navs} options={{
             headerShown: false,
             tabBarLabel: 'Settings',
             tabBarIcon: () => (
               <CogIcon name="bell" style={{ color: 'black' }} />
             ),
           }} />
-          <Tab.Screen name="Profile" component={Users} options={{
+          <Tab.Screen name="users" component={Users} options={{
             headerShown: false,
             tabBarLabel: 'Users',
             tabBarIcon: () => (
