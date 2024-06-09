@@ -31,14 +31,6 @@ const Institutions = ({ navigation }) => {
         <TouchableOpacity className="text-xl text-center font-bold" onPress={() => navigation.goBack()}>
           <ArrowLeftIcon color={'white'} />
         </TouchableOpacity>
-        <View className=" bg-white rounded-md">
-          <TouchableOpacity className="flex flex-row justify-between items-center gap-1 p-2" onPress={()=>navigation.navigate('addInstitution')}>
-          <PlusIcon color={'#ff6600'} />
-          <Text className="text-xl text-center font-bold text-[#ff6600]">
-            Add Institutions
-          </Text>
-          </TouchableOpacity>
-        </View>
       </View>
       <View className="bg-slate-50 h-screen w-full m-auto mt-0" style={{ elevation: 5 }}>
         <Text className="text-center font-bold text-2xl underline py-2">
